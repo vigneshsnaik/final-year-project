@@ -3,7 +3,6 @@ import axios from "axios";
 import CodeEditor from "./components/CodeEditor";
 import VisualizationControls from "./components/VisualizationControls";
 import ExecutionStep from "./components/ExecutionStep";
-import code from "./data/Stack.json";
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
@@ -11,7 +10,7 @@ const CLIENT_ID = import.meta.env.VITE_APP_OAUTH_CLIENT_ID;
 const CLIENT_SECRET = import.meta.env.VITE_APP_OAUTH_CLIENT_SECRET;
 
 function App() {
-  const [value, setValue] = useState(code.stack);
+  const [value, setValue] = useState("");
   const [executionSteps, setExecutionSteps] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [response, setResponse] = useState(null);
@@ -22,7 +21,7 @@ function App() {
 
   const visualizeCode = () => {
     axios
-      .post(`${API_BASE_URL}/visualize`, {
+      .post(`${API_BASE_URL}/api/trace-python`, {
         code: value,
         apiKey: `${API_KEY}`,
         clientID: `${CLIENT_ID}`,
